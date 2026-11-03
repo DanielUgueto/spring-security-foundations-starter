@@ -23,30 +23,32 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/hello").permitAll()
-                        .requestMatchers("/api/notes").authenticated())
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/notes").authenticated()
+                        .anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults());
 
         return http.build();
     }
 
     @Bean
-    PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    UserDetailsService userDetailsService(PasswordEncoder pwEncoder){
-        UserDetails user1 = User.withUsername("user1")
-                .password(pwEncoder.encode("pw"))
-                .roles("USER")
-                .build();
-
-        UserDetails admin = User.withUsername("admin")
-                .password(pwEncoder.encode("pw"))
-                .roles("ADMIN")
-                .build();
-
-        return new InMemoryUserDetailsManager(user1, admin);
-    }
+//    @Bean
+//    UserDetailsService userDetailsService(PasswordEncoder pwEncoder){
+//        UserDetails user1 = User.withUsername("user1")
+//                .password(pwEncoder.encode("pw"))
+//                .roles("USER")
+//                .build();
+//
+//        UserDetails admin = User.withUsername("admin")
+//                .password(pwEncoder.encode("pw"))
+//                .roles("ADMIN")
+//                .build();
+//
+//        return new InMemoryUserDetailsManager(user1, admin);
+//    }
 
 }
