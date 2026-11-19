@@ -33,6 +33,8 @@ class AppUser {
         this.role = role;
     }
 
+    Long getId() {return id;}
+
     String getUsername() {
         return username;
     }

@@ -27,7 +27,6 @@ public class SecurityConfig {
                         .requestMatchers("/api/notes").authenticated()
                         .anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults());
-
         return http.build();
     }
 
